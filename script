@@ -1,0 +1,67 @@
+CREATE TABLE Fornecedor (
+	id 		SERIAL,
+	nome 	VARCHAR(45) NOT NULL,
+	CONSTRAINT PK_fornecedor PRIMARY KEY (id)
+)
+
+CREATE TABLE Transportadora (
+	id 		SERIAL,
+	nome 	VARCHAR(45) NOT NULL,
+	CONSTRAINT PK_transportadora PRIMARY KEY (id)
+)
+
+CREATE TABLE Pedido (
+	pedidoId 			INTEGER,
+	categoriaId 		SERIAL		,
+	categoriaNome 		VARCHAR(45) ,
+	categoriaDescricao  VARCHAR(45) ,
+	clienteId 			SERIAL 		,
+	clienteNome 		VARCHAR(45) ,
+	clienteContato 		VARCHAR(45) ,
+	clienteCidade 		VARCHAR(45) , 
+	clientePaisId 		VARCHAR(45) , 
+	clientePais 		VARCHAR(45) , 
+	vendasCusto 		DECIMAL 	, 
+	margemBruta 		DECIMAL 	,
+	vendas 				DECIMAL 	,
+	desconto 			DECIMAL 	,
+	frete 				DECIMAL 	,
+	qtde 				INTEGER 	,
+	data 				DATE 		,
+	vendedorId 			INTEGER 	,
+	produtoId 			SERIAL 		,
+	produtoNome 		VARCHAR(45) , 
+	transportadoraId 	INTEGER 	,
+	fornecedorId 		INTEGER 	,
+	CONSTRAINT FK_pedido_vendedor 		FOREIGN KEY  (vendedorID) 		REFERENCES Vendedor,
+	CONSTRAINT FK_pedido_transportadora FOREIGN KEY (transportadoraId) 	REFERENCES Transportadora,
+	CONSTRAINT FK_pedido_fornecedor 	FOREIGN KEY (fornecedorId) 		REFERENCES Fornecedor
+)
+
+DROP TABLE PEDIDO
+
+CREATE TABLE Vendedor(
+	id SERIAL,
+	nome VARCHAR(45) NOT NULL,
+	CONSTRAINT PK_vendedor PRIMARY KEY (id)
+)
+
+select * from vendedor
+select * from fornecedor
+select * from transportadora
+select * from pedido
+
+COPY vendedor (id, nome)
+FROM 'C:\Maria Rita\IFPB\P6\IE\Vendedores.csv' DELIMITER ',' CSV HEADER;
+
+COPY fornecedor (id, nome)
+FROM 'C:\Maria Rita\IFPB\P6\IE\Fornecedores.csv' DELIMITER ',' CSV HEADER;
+
+COPY transportadora (id, nome)
+FROM 'C:\Maria Rita\IFPB\P6\IE\Transportadoras.csv' DELIMITER ',' CSV HEADER;
+
+COPY pedido (pedidoId, categoriaId, categoriaNome, categoriaDescricao, clienteId, clienteNome, 
+			 clienteContato, clienteCidade, clientePaisId, clientePais, vendasCusto, margemBruta, 
+			 vendas, desconto, frete, qtde, data, vendedorId, produtoId, produtoNome, transportadoraId, fornecedorId)
+FROM 'C:\Maria Rita\IFPB\P6\IE\VendasGlobais.csv' DELIMITER ',' CSV HEADER
+
